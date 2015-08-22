@@ -74,9 +74,13 @@ console.log("Listening on port " + port);
 
 io.sockets.on('connection', function (socket) {
 
-	Book.count({}, function( err, count){	      
-      	io.sockets.emit('booked', { message: (config.TICKETS - count)});
-	});
+	//Book.count({}, function( err, count){	      
+    //  	io.sockets.emit('booked', { message: (config.TICKETS - count)});
+    //});
+
+    Book.count({ status: { $ne: 'pending' } }, function (err, count) {
+        io.sockets.emit('booked', { message: (config.TICKETS - count) });
+    });
 
     socket.on('send', function (data) {
     	try {
@@ -112,14 +116,7 @@ io.sockets.on('connection', function (socket) {
 			    		return;
 			    	}
 			      
-			      	io.sockets.emit('message', { message: 'Đăng ký thành công! Bạn vui lòng check mail xác nhận!'});
-
-			      	Book.count({ status: { $n: 'pending' } }, function( err, count){
-						    console.log( "Number of users:", count );
-					      	console.log(config.TICKETS - count);
-					      	
-					      	io.sockets.emit('booked', { message: (config.TICKETS - count)});
-					});
+			      	io.sockets.emit('message', { message: 'Đăng ký thành công! Bạn vui lòng check mail xác nhận!'});			      	
 
 			      	emailVerification.send(_book.email);
 			    });
