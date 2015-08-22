@@ -1,0 +1,58 @@
+﻿<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Tickets</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="form-group">
+            <table class="table table-bordered table-hover tc-table">
+                <thead>
+                    <tr>
+                        <th class="hidden-xs">Email</th>
+                        <th class="col-medium center">Floor</th>                        
+                        <th class="hidden-xs">Status</th>
+                        <th class="hidden-xs">Created Date</th>
+                        <th class="col-medium center">Action</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <td colspan="6">
+                            <pagination boundary-links="true" total-items="totalItems" class="pagination-sm"
+                                        previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+                                        max-size="maxSize" ng-model="currentPage"
+                                        items-per-page="itemsPerPage" ng-change="pageChanged()"></pagination>
+                        </td>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    <tr ng-repeat="model in models">
+                        <td>
+                            <a ui-sref="modelEdit({modelId: model._id})">
+                                {{model.email}}
+                            </a>
+                        </td>
+                        <td class="hidden-xs">
+                            {{model.tickettype}}
+                        </td>
+                        <td class="hidden-xs">
+                            {{model.status}}
+                        </td>
+                        <td class="hidden-xs">
+                            {{model.created_time | date:'dd/MM/yyyy - HH:mm:ss'}}
+                        </td>
+                        <td class="col-medium center">
+                            <div class="btn-group btn-group-xs " ng-show="{{model.status == 'publish'? false : true}}">
+                                <a href="" ng-click="goEdit($index)" class="btn btn-inverse"><i class="fa fa-pencil icon-only"></i></a>
+                                <a ng-click='modelDelete($index)' class="btn btn-danger"><i class="fa fa-times icon-only"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
