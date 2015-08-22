@@ -152,8 +152,9 @@
 	            return;
 	        }
 
-	    	var text = field.value;
-	        socket.emit('send', { email: text, tickettype: 1 });
+	        var text = field.value;
+	        var floor = $("input[name='tickettype']:checked").val();
+	        socket.emit('send', { email: text, tickettype: floor });
 	        field.value = "";
 	        return false;
 	    }

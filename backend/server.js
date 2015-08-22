@@ -13,7 +13,7 @@ var filter = /^([\w-\.]+)@fpt.com.vn$/;
 // Connect to the booklocker MongoDB
 mongoose.connect(config.DB_CONNECTION);
 
-var port = config.PORT || 3700;
+var port = config.PORT || 6969;
 
 // app.set('views', __dirname + '/tpl');
 // app.set('view engine', "jade");

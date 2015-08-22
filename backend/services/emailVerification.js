@@ -9,7 +9,7 @@ var Book = require('../models/Book.js');
 
 
 var model = {
-    verifyUrl: 'http://localhost:3700/auth/verifyEmail?token=',
+    verifyUrl: config.APP_URL + '/auth/verifyEmail?token=',
     title: 'Gala Gọi tên ngày mới',
     subTitle: 'Xác nhận đăng ký thành công!',
     body: 'Để hoàn thành bước đăng ký, xin vui lòng click vào nút xác nhận!'

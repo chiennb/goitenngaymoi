@@ -6,7 +6,8 @@ module.exports = {
     SMTP_SERVER: 'smtp.gmail.com',
     SMTP_USERNAME: 'fis.goitenngaymoi@gmail.com',
     SMTP_PASSWORD: 'abc@@123',
-    DB_CONNECTION: 'mongodb://UserReadWrite:Aa123aA@localhost:27017/tickets',
-    PORT: 3636,
+    //DB_CONNECTION: 'mongodb://localhost:27017/tickets',
+    DB_CONNECTION: 'mongodb://UserReadWrite:Aa123aA@localhost:27017/UserDB',
+    PORT: 6969,
     TICKETS: 999
 };
