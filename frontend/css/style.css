@@ -609,7 +609,7 @@ input[type="submit"]:hover {
 }
 
 #modal .inner, #modalInfo .inner {
-	max-width: 612px;
+	max-width: 650px;
 }
 
 /* Background Overlay */
@@ -797,4 +797,8 @@ input[type="submit"]:hover {
 	.countdown_amount {
 		font-size: 36px;
 	}
+}
+
+span.test {
+    color: #F6851F;
 }
