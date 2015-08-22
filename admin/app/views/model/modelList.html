@@ -8,11 +8,40 @@
     <!-- /.row -->
     <div class="row">
         <div class="form-group">
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Email</label>
+                    <input name="inputName" type="text" class="form-control"
+                           ng-model="email" placeholder="Email">
+                </div>
+                <div class="col-md-6">
+                    <label>Status</label>
+                    <select id="cboStatus" class="form-control" name="cboStatus" ng-model="status" required>
+                        <option value=""> - All - </option>
+                        <option value="pending">pending</option>
+                        <option value="active">active</option>
+                        <option value="approved">approved</option>
+                    </select>
+                </div>
+            </div>
+        </div>        
+        <div class="form-actions">
+            <div class="form-group">
+                    <button type="submit" class="btn btn-primary"
+                            ng-click="search()">
+                        Search
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
             <table class="table table-bordered table-hover tc-table">
                 <thead>
                     <tr>
                         <th class="hidden-xs">Email</th>
-                        <th class="col-medium center">Floor</th>                        
+                        <th class="col-medium center">Floor</th>
                         <th class="hidden-xs">Status</th>
                         <th class="hidden-xs">Created Date</th>
                         <th class="col-medium center">Action</th>

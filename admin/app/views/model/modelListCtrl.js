@@ -10,19 +10,11 @@
 
         $scope.models = [];
 
-        $scope.email = 'chiennb@gmail.com';
-        $scope.status = 'pending';
+        $scope.email = '';
+        $scope.status = '';
         $scope.floor = 1;
         $scope.page = 12;
 
-
-        modelServices.getAll($scope.email, $scope.status, $scope.floor, $scope.page)
-            .success(function(data){
-                $scope.models = data;
-            })
-            .error(function(err) {
-              $scope.models = [];
-            });
         // //-----------paging--------------
         // $scope.totalItems = 0;
         // $scope.currentPage = 1;
@@ -65,15 +57,12 @@
         // Delete
         $scope.modelDelete = function (index) {
             if (popupService.showPopup('Are you sure delete this model?')) {
-                $http.post(appSettings.serverPath + "/modelinfo/delall", { _id: $scope.models[index]._id })
+
+                modelServices.destroy($scope.models[index]._id)
                     .success(function (data, status, headers, config) {
-                        if (data.dellallmodel.header.code == 0) {
-                            $scope.models.splice(index, 1);
-                            $scope.pagination($scope.models);
-                        }
-                        else {
-                            popupService.showMessage(data.dellallmodel.header.message);
-                        }
+                        $scope.models.splice(index, 1);
+                        $scope.pagination($scope.models);
+                        popupService.showMessage('Huỷ đăng ký thành công!');
                     })
                     .error(function (data, status, headers, config) {
                         // called asynchronously if an error occurs
@@ -82,37 +71,18 @@
             }
         }
 
-        // Add
-        $scope.add = function (editForm) {
 
-            if (!$scope.modelForm.$valid) {
-                return;
-            }
-            if ($scope.model._id == null || $scope.model._id == 'undefined' || $scope.model._id == '') {
-                $scope.model.status = 'draft';
+        $scope.search = function () {
 
-                $http.post(appSettings.serverPath + "/modelinfo/insert", $scope.model).
-                    success(function (data, status, headers, config) {
-                        if (data.insertModelInfo.header.code == 0) {
-                            $scope.models.push(data.insertModelInfo.body);
+            modelServices.getAll($scope.email, $scope.status, $scope.floor, $scope.page)
+            .success(function (data) {
+                $scope.models = data;
+            })
+            .error(function (err) {
+                $scope.models = [];
+            });
+        };
 
-                            $scope.pagination($scope.models);
-                            //popupService.showMessage('Insert Success!');
-                            $scope.model = {};
-                            editForm.$setPristine();
-                        }
-                        else {
-                            popupService.showMessage(data.insertModelInfo.header.message);
-                        }
-
-                    }).
-                    error(function (data, status, headers, config) {
-                        // called asynchronously if an error occurs
-                        // or server returns response with an error status.
-                    });
-            }
-        }
-
-        //$scope.getAllModel();
+        $scope.search();
     }
 }());

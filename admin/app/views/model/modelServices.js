@@ -36,7 +36,7 @@
                 return $http({
                     method: 'GET',
                     url: appSettings.serverPath + '/api/books' + filter,
-                    cache: true
+                    //cache: true
                 });
                 
             },
@@ -46,8 +46,12 @@
             addNew: function(book){
                 return $http.post(appSettings.serverPath + '/api/books', book)
             },
-            updated: function(book){
+            updated: function (book) {
+                console.log(book);
                 return $http.put(appSettings.serverPath + '/api/books/' + book._id, book)
+            },
+            destroy: function(id){
+                return $http.delete(appSettings.serverPath + '/api/books/' + id)
             }
         }        
             

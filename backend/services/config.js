@@ -1,5 +1,6 @@
 module.exports = {
-    APP_URL: 'http://localhost:' + 6969,
+    //APP_URL: 'http://localhost:' + 6969,
+    APP_URL: 'http://10.15.171.35:' + 6969,
     FACEBOOK_SECRET: '2c1bb2c2003e63c109f1d205c91bdf30',
     GOOGLE_SECRET: 'xjJ9wOaE2hcKGZcUBnso_XaO',
     EMAIL_SECRET: 'something',
@@ -7,7 +8,7 @@ module.exports = {
     SMTP_USERNAME: 'fis.goitenngaymoi@gmail.com',
     SMTP_PASSWORD: 'abc@@123',
     //DB_CONNECTION: 'mongodb://localhost:27017/tickets',
-    DB_CONNECTION: 'mongodb://UserReadWrite:Aa123aA@localhost:27017/UserDB',
+    DB_CONNECTION: 'mongodb://UserReadWrite:Aa123aA@localhost:27017/UsersDB',
     PORT: 6969,
     TICKETS: 666
 };

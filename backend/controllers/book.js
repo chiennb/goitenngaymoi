@@ -22,18 +22,34 @@ exports.postBooks = function(req, res) {
 // Create endpoint /api/books for GET
 exports.getBooks = function(req, res) {
 
-  console.log(req.query.page);
-  console.log(req.query.email);
-  console.log(req.query.status);
-  console.log(req.query.floor);
+    var query = Book.find();
+
+    if (req.query.email != null && req.query.email != '')
+        query.where('email').equals(new RegExp(req.query.email, 'i'));
+
+    if (req.query.status != null && req.query.status != '')
+        query.where('status').equals(req.query.status);
+
+    query.exec(function(err, books) {
+        if (err)
+            res.send(err);
+
+        res.json(books);
+    });
+
+
+  //console.log(req.query.page);
+  //console.log(req.query.email);
+  //console.log(req.query.status);
+  //console.log(req.query.floor);
 
   // Use the Book model to find all book
-  Book.find({}, function(err, books) {
-    if (err)
-      res.send(err);
+  //Book.find({}, function(err, books) {
+  //  if (err)
+  //    res.send(err);
 
-    res.json(books);
-  });
+  //  res.json(books);
+  //});
 };
 
 // Create endpoint /api/books/:book_id for GET
@@ -49,17 +65,13 @@ exports.getBook = function(req, res) {
 
 // Create endpoint /api/books/:book_id for PUT
 exports.putBook = function(req, res) {
-  console.info(req.body);
-  //console.log(req.body.status);
+   //Use the Book model to find a specific book
+   Book.update({ _id: req.params.book_id }, { tickettype: req.body.tickettype, status: req.body.status }, function(err, num, raw) {
+     if (err)
+       res.send(err);
 
-  console.log(req.params.book_id);
-  // Use the Book model to find a specific book
-  // Book.update({ _id: req.params.book_id }, { tickettype: req.body.tickettype, status: req.body.status }, function(err, num, raw) {
-  //   if (err)
-  //     res.send(err);
-
-  //   res.json({ message: num + ' updated' });
-  // });
+     res.json({ message: num + ' updated' });
+   });
 };
 
 // Create endpoint /api/books/:book_id for DELETE

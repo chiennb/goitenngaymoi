@@ -43,7 +43,7 @@
             }
             else{
                 //modelServices.updated($scope.model)
-                modelServices.updated({tickettype: $scope.model.tickettype, status: $scope.model.status, _id: $scope.model._id})
+                modelServices.updated($scope.model)
                     .success(function (data, status, headers, config) {
                         popupService.showMessage('Update Success!');
                         $scope.back();

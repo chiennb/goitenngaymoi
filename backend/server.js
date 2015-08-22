@@ -1,4 +1,5 @@
 var express = require("express");
+var bodyParser = require('body-parser');
 var path = require('path');
 var app = express();
 var mongoose = require('mongoose');
@@ -14,6 +15,12 @@ var filter = /^([\w-\.]+)@fpt.com.vn$/;
 mongoose.connect(config.DB_CONNECTION);
 
 var port = config.PORT || 6969;
+
+//app.use(bodyParser.urlencoded({
+//    extended: true
+//}));
+
+app.use(bodyParser.json());
 
 // app.set('views', __dirname + '/tpl');
 // app.set('view engine', "jade");
@@ -44,14 +51,14 @@ var router = express.Router();
 
 // Create endpoint handlers for /books
 router.route('/api/books')
-  .post(bookController.postBooks)
-  .get(bookController.getBooks);
+    .post(bookController.postBooks)
+    .get(bookController.getBooks);
 
 // Create endpoint handlers for /books/:book_id
 router.route('/api/books/:book_id')
-  .get(bookController.getBook)
-  .put(bookController.putBook)
-  .delete(bookController.deleteBook);
+    .get(bookController.getBook)
+    .put(bookController.putBook)
+    .delete(bookController.deleteBook);
 
 //app.get('/auth/verifyEmail', emailVerification.handler);
 router.route('/auth/verifyEmail')
@@ -107,7 +114,7 @@ io.sockets.on('connection', function (socket) {
 			      
 			      	io.sockets.emit('message', { message: 'Đăng ký thành công! Bạn vui lòng check mail xác nhận!'});
 
-			      	Book.count({}, function( err, count){
+			      	Book.count({ status: { $n: 'pending' } }, function( err, count){
 						    console.log( "Number of users:", count );
 					      	console.log(config.TICKETS - count);
 					      	
