@@ -93,22 +93,22 @@ io.sockets.on('connection', function (socket) {
 	    		return;
 	    	}
 
-	    	var regex = new RegExp(["^", _book.emai, "$"].join(""), "i");
+	    	var regex = new RegExp(["^", _book.email, "$"].join(""), "i");
     	    // Creates a regex of: /^SomeStringToFind$/i
 	    	//db.stuff.find({ foo: regex });
 
-	    	Book.findOne({ email: _book.emai }, function (err, existingBook) {
+	    	Book.findOne({ email: regex }, function (err, existingBook) {
 			    if (existingBook) {
 			    	if (existingBook.status == 'pending'){
 			    		io.sockets.emit('message',{message: ' Email đã đăng ký nhưng chưa xác nhận!'});
 			    		return;
 			    	}		      			      		
 			    	else if (existingBook.status == 'active') {
-			    	    io.sockets.emit('message', { message: 'Email đã xác nhận vui lòng liên hệ với BTC để thanh toán!'});
+			    	    io.sockets.emit('message', { message: 'Email đã xác nhận. Vui lòng liên hệ với BTC để thanh toán!'});
 			      		return;
 			    	}
 			    	else{
-			    	    io.sockets.emit('message', { message: 'Bạn đã đóng tiền, thật không thể tin nổi :D!' });
+			    	    io.sockets.emit('message', { message: 'Bạn đã đóng tiền. Thật không thể tin nổi :D!' });
 			    	    return;
 			    	}
 			    }
