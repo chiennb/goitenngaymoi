@@ -23,6 +23,7 @@ exports.send =  function(email){
         };
 
         var token = jwt.encode(payload, config.EMAIL_SECRET);
+        console.log('email: ' + email +',token: ' + token);
 
         var transporter = nodemailer.createTransport(smtpTransport({
             host: config.SMTP_SERVER,
@@ -34,10 +35,11 @@ exports.send =  function(email){
         }));
 
         var mailOptions = {
-            from: 'Accounts <accounts@google.com>',
+            from: 'Gala FIS 2015 <accounts@google.com>',
             to: email,
             subject: 'Mail xac nhan dang ky tham gia gala "Goi ngay moi"',
-            html: getHtml(token)
+            //html: getHtml(token)
+            html: "<h3>Gala Gọi tên ngày mới<h3><p>Xác nhận đăng ký thành công!</p><p>Để hoàn thành bước đăng ký, xin vui lòng click vào nút xác nhận! <a href='" + config.APP_URL + '/auth/verifyEmail?token=' + token +"'> Xác nhận</a></p>"
         };
 
         transporter.sendMail(mailOptions, function(err, info){
@@ -61,6 +63,7 @@ exports.handler = function(req, res){
     var token = req.query.token;
 
     var payload = jwt.decode(token, config.EMAIL_SECRET);
+    console.log(token);
 
     var email = payload.sub;
 
@@ -85,7 +88,7 @@ exports.handler = function(req, res){
 
 };
 
-function getHtml(token){
+function getHtml(token) {
     var path = './views/emailVerification.html';
     var html = fs.readFileSync(path, encoding = 'utf8');
 
@@ -93,6 +96,9 @@ function getHtml(token){
 
     model.verifyUrl += token;
 
+    //var abc = template(model);
+    //console.log(abc);
+    //return abc;
     return template(model);
 }
 
