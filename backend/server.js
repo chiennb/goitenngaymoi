@@ -97,7 +97,7 @@ io.sockets.on('connection', function (socket) {
     	    // Creates a regex of: /^SomeStringToFind$/i
 	    	//db.stuff.find({ foo: regex });
 
-	    	Book.findOne({ email: regexl }, function (err, existingBook) {
+	    	Book.findOne({ email: regex }, function (err, existingBook) {
 			    if (existingBook) {
 			    	if (existingBook.status == 'pending'){
 			    		io.sockets.emit('message',{message: ' Email đã đăng ký nhưng chưa xác nhận!'});
