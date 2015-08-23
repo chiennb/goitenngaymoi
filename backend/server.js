@@ -114,7 +114,7 @@ io.sockets.on('connection', function (socket) {
 			    }
 
 			    var book = new Book({
-			      email: _book.email,
+			        email: _book.email.toLowerCase(),
 			      tickettype: _book.tickettype
 			    });
 
