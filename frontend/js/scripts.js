@@ -160,6 +160,7 @@
 	    }
 
 	    function validateEmail(sEmail) {
+	        sEmail = sEmail.toLơ.toLowerCase();
 		    var filter = /^([\w-\.]+)@fpt.com.vn$/;
 		    if (filter.test(sEmail)) {
 		        return true;

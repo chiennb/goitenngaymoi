@@ -86,7 +86,9 @@ io.sockets.on('connection', function (socket) {
     	try {
     		//console.log(data);
 	    	//var _book = JSON.parse(data);	 
-	    	_book = data;
+    	    _book = data;
+
+    	    _book.email = _book.email.toLowerCase();
 
 	    	if (!filter.test(_book.email)){
 	    		io.sockets.emit('message',{message: 'Bạn phải nhập email FPT!'});
@@ -114,7 +116,7 @@ io.sockets.on('connection', function (socket) {
 			    }
 
 			    var book = new Book({
-			        email: _book.email.toLowerCase(),
+			        email: _book.email,
 			      tickettype: _book.tickettype
 			    });
 
