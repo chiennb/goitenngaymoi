@@ -118,7 +118,7 @@ exports.handler = function(req, res){
             foundUser.save(function(err){
                 if(err) return res.status(500);
 
-                
+                sendSucess(email);
                 return res.redirect(config.APP_URL);
             });
     });
