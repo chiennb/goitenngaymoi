@@ -302,7 +302,7 @@ input {
 }
 
 button,
-input[type="submit"] {
+input[type="button"] {
 	-webkit-appearance: button;
 	cursor: pointer;
 }
@@ -371,7 +371,7 @@ textarea:focus {
 }
 
 button,
-input[type="submit"] {
+input[type="button"] {
 	background: #F6851F;
 	background: #F6851F;
 	-webkit-transition:	all 0.3s;
@@ -381,8 +381,8 @@ input[type="submit"] {
 
 button:hover,
 button:focus,
-input[type="submit"]:focus,
-input[type="submit"]:hover {
+input[type="button"]:focus,
+input[type="button"]:hover {
 	background: #F6851F;
 	color: #dadada;
 	outline: 0;
