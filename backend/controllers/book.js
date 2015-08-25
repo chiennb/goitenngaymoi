@@ -157,13 +157,12 @@ exports.sendMail = function (req, res) {
     //});
     var email = req.params.email;
     try {
-        //setTimeout(function () {
-        //console.log(books[i]);
         console.log('Send mail: ' + email);
         emailVerification.send(email);
-        //}, 3000);
+        res.status(200).send('Thành công!');
     } catch (e) {
         console.log(e);
+        res.status(500).send(e);
     }
 
 };
