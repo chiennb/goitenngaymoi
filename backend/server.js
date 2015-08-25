@@ -64,6 +64,9 @@ router.route('/api/books/:book_id')
 router.route('/auth/verifyEmail')
   .get(emailVerification.handler)
 
+router.route('/api/sendMail')
+  .post(bookController.sendMailPending)
+
 // Register all our routes
 app.use(router);
 

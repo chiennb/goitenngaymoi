@@ -1,6 +1,7 @@
 // Load required packages
 var Book = require('../models/Book');
 var config = require('../services/config.js');
+var emailVerification = require('../services/emailVerification.js');
 // Create endpoint /api/books for POST
 exports.postBooks = function(req, res) {
   // Create a new instance of the Book model
@@ -113,4 +114,29 @@ exports.deleteBook = function(req, res) {
 
     res.json({ message: 'Book removed from the locker!' });
   });
+};
+
+
+// Create endpoint /api/books/:book_id for DELETE
+exports.sendMailPending = function (req, res) {
+    
+    var query = Book.find();
+
+    query.where('status').equals('pending');
+
+    query.sort({
+        created_time: 'desc'
+    })
+    .exec(function (err, books) {
+        if (err)
+            res.send(err);        
+
+        books.forEach(function (entry) {
+            //console.log(entry.email);
+            emailVerification.send(entry.email);
+        });
+
+        res.send('Ok');
+    });
+
 };
