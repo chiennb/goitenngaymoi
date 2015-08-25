@@ -51,7 +51,7 @@ exports.send =  function(email){
             }
 
             console.log("OK");
-            console.log('email sent ', info.response);
+            //console.log('email sent ', info.response);
         });
     } catch (Err) {
             console.log("skipping: " + Err);
