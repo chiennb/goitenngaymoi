@@ -160,7 +160,7 @@ io.sockets.on('connection', function (socket) {
 
 			                    io.sockets.emit('message', { message: 'Đăng ký thành công! Bạn vui lòng check mail xác nhận!' });
 
-			                    //emailVerification.send(_book.email);
+			                    emailVerification.send(_book.email);
 			                });
 			            }
 
@@ -194,7 +194,7 @@ io.sockets.on('connection', function (socket) {
 
 			                    io.sockets.emit('message', { message: 'Đăng ký thành công! Bạn vui lòng check mail xác nhận!' });
 
-			                    //emailVerification.send(_book.email);
+			                    emailVerification.send(_book.email);
 			                });
 			            }
 			        }
