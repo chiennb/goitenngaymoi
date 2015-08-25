@@ -44,13 +44,6 @@ var myapp = angular
           events: true,
       });
 
-      $authProvider.facebook({
-          clientId: '804896872898846'
-      });
-
-      $authProvider.google({
-          clientId: '612423556891-59he3rnnqst0dgo8598ua1jg93tvp8ip.apps.googleusercontent.com'
-      });
 
       $authProvider.loginUrl = appSettings.authPath + '/auth/login';
       $authProvider.signupUrl = appSettings.authPath + '/auth/signup'
