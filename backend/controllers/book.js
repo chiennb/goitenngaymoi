@@ -142,10 +142,11 @@ exports.sendMailPending = function (req, res) {
         //});
         for (var i = 0, len = books.length; i < len; i++) {
             try {
-                setTimeout(function () {
+                //setTimeout(function () {
+                    //console.log(books[i]);
                     console.log('Send mail: ' + books[i].email);
                     emailVerification.send(books[i].email);
-                }, 3000);
+                //}, 3000);
             } catch (e) {
                 console.log(e);
                 continue;
