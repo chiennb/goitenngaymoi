@@ -49,7 +49,6 @@ exports.send =  function(email){
                 //return res.status(500, err);
                 ;
             }
-
             console.log("OK");
             //console.log('email sent ', info.response);
         });
