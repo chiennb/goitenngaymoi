@@ -74,12 +74,15 @@ console.log("Listening on port " + port);
 
 io.sockets.on('connection', function (socket) {
 
-	//Book.count({}, function( err, count){	      
-    //  	io.sockets.emit('booked', { message: (config.TICKETS - count)});
-    //});
 
-    Book.count({ status: { $ne: 'pending' } }, function (err, count) {
-        io.sockets.emit('booked', { message: (config.TICKETS - count) });
+    Book.count({ status: { $ne: 'pending' }, tickettype: '1'}, function (err, count) {
+        if (err) console.log(err);
+
+        io.sockets.emit('floorOne', { message: (config.FLOORONE - count) });
+    });
+
+    Book.count({ status: { $ne: 'pending' }, tickettype: '2' }, function (err, count) {
+        io.sockets.emit('floorTwo', { message: (config.FLOORTWO - count) });
     });
 
     socket.on('send', function (data) {
@@ -115,21 +118,89 @@ io.sockets.on('connection', function (socket) {
 			    	}
 			    }
 
+
+
 			    var book = new Book({
 			        email: _book.email,
 			      tickettype: _book.tickettype
 			    });
 
-			    book.save(function(err) {
-			    	if (err){
-			    		io.sockets.emit('message', {message: 'Không đăng ký thành công: ' + err});
-			    		return;
-			    	}
-			      
-			      	io.sockets.emit('message', { message: 'Đăng ký thành công! Bạn vui lòng check mail xác nhận!'});			      	
+			    Book.count({ status: { $ne: 'pending' }, tickettype: _book.tickettype }, function (err, count) {
 
-			      	emailVerification.send(_book.email);
+			        var check1 = 0;
+			        var check2 = 0;
+
+                    //Neu dang ky ve tang 1
+			        if (_book.tickettype == '1') {
+			            check1 = config.FLOORONE - count;
+
+                        //Neu tang 1 het
+			            if (check1 <= 0) {
+
+                            //Dem ve tang 2
+			                Book.count({ status: { $ne: 'pending' }, tickettype: '2' }, function (err, count2) {
+			                    check2 = config.FLOORTWO - count2;
+
+                                //Neu tang 2 het
+			                    if (check2 == 0) {
+			                        io.sockets.emit('message', { message: 'Thật không thể tin nổi. Các vé đã được đặt hết!' });
+			                        return;
+			                    }
+			                    else {
+			                        io.sockets.emit('message', { message: 'Vé tầng 1 đã đăng ký hết. Bạn chuyển sang đăng ký tầng 2.' });
+			                        return;
+			                    }
+			                });
+			            } else {
+			                book.save(function (err) {
+			                    if (err) {
+			                        io.sockets.emit('message', { message: 'Không đăng ký thành công: ' + err });
+			                        return;
+			                    }
+
+			                    io.sockets.emit('message', { message: 'Đăng ký thành công! Bạn vui lòng check mail xác nhận!' });
+
+			                    //emailVerification.send(_book.email);
+			                });
+			            }
+
+			        }
+			        else {//Dang ky ve tang 2
+			            check1 = config.FLOORTWO - count;
+
+			            //Neu tang 2 het
+			            if (check1 <= 0) {
+
+			                //Dem ve tang 1
+			                Book.count({ status: { $ne: 'pending' }, tickettype: '1' }, function (err, count2) {
+			                    check2 = config.FLOORONE - count2;
+
+			                    //Neu tang 2 het
+			                    if (check2 == 0) {
+			                        io.sockets.emit('message', { message: 'Thật không thể tin nổi. Các vé đã được đặt hết!' });
+			                        return;
+			                    }
+			                    else {
+			                        io.sockets.emit('message', { message: 'Vé tầng 2 đã đăng ký hết. Bạn chuyển sang đăng ký tầng 1.' });
+			                        return;
+			                    }
+			                });
+			            } else {
+			                book.save(function (err) {
+			                    if (err) {
+			                        io.sockets.emit('message', { message: 'Không đăng ký thành công: ' + err });
+			                        return;
+			                    }
+
+			                    io.sockets.emit('message', { message: 'Đăng ký thành công! Bạn vui lòng check mail xác nhận!' });
+
+			                    //emailVerification.send(_book.email);
+			                });
+			            }
+			        }
+			        
 			    });
+			    
 			  });
         } catch (Err) {
 	        console.log("skipping: " + Err);

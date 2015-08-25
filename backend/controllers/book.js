@@ -1,40 +1,63 @@
 // Load required packages
 var Book = require('../models/Book');
-
+var config = require('../services/config.js');
 // Create endpoint /api/books for POST
 exports.postBooks = function(req, res) {
   // Create a new instance of the Book model
   var book = new Book();
 
   // Set the book properties that came from the POST data
-  book.email = req.book.email;
-  book.tickettype = req.book.tickettype;
+  book.email = req.body.email;
+  book.tickettype = req.body.tickettype;
 
   // Save the book and check for errors
   book.save(function(err) {
     if (err)
       return err;
 
-    return book;
+    res.json(book);
   });
 };
 
 // Create endpoint /api/books for GET
 exports.getBooks = function(req, res) {
 
-    var query = Book.find();
+    var perPage = config.PAGESIZE;
+    //var query = Book.find();
+
+    var query = {};
+
 
     if (req.query.email != null && req.query.email != '')
-        query.where('email').equals(new RegExp(req.query.email, 'i'));
+        //query.where('email').equals(new RegExp(req.query.email, 'i'));
+        query["email"] = new RegExp(req.query.email, 'i');
 
     if (req.query.status != null && req.query.status != '')
-        query.where('status').equals(req.query.status);
+        //query.where('status').equals(req.query.status);
+        query["status"] = status;
 
-    query.exec(function(err, books) {
+    var page = 0;
+    if (req.query.page != null && req.query.page != '')
+        page = req.query.page - 1;
+
+    //console.log(page);
+    //query
+    Book.find(query)
+    .limit(perPage)
+    .skip((perPage * page))
+    .sort({
+        created_time: 'desc'
+    })
+    //query
+    .exec(function (err, books) {
         if (err)
             res.send(err);
 
-        res.json(books);
+        Book.count(query).exec(function (err, count) {
+            res.json({books: books, count: count});            
+        })
+
+        
     });
 
 

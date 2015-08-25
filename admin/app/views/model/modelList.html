@@ -24,13 +24,21 @@
                     </select>
                 </div>
             </div>
-        </div>        
+        </div>
         <div class="form-actions">
             <div class="form-group">
-                    <button type="submit" class="btn btn-primary"
-                            ng-click="search()">
-                        Search
-                    </button>
+                <div class="row">
+                    <div class="col-md-6">
+                        <button type="submit" class="btn btn-primary"
+                                ng-click="search()">
+                            Search
+                        </button>
+                    </div>
+                    <div class="col-md-6">
+                        <a ui-sref="modelEdit" class=" btn btn-primary">
+                            Add
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

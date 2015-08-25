@@ -13,34 +13,32 @@
         $scope.email = '';
         $scope.status = '';
         $scope.floor = 1;
-        $scope.page = 12;
+ 
 
-        // //-----------paging--------------
-        // $scope.totalItems = 0;
-        // $scope.currentPage = 1;
-        // $scope.maxSize = 20;
-        // $scope.itemsPerPage = 10;
-        // $scope.pageChanged = function () {
-        //     $scope.getModelPage($scope.currentPage, $scope.itemsPerPage);
-        // };
-        // $scope.getModelPage = function (currentPage, pageSize) {
-        //     //console.log(appSettings.serverPath);
-        //     $http.get(appSettings.serverPath + "/modelinfo/search?pageIndex=" + currentPage + "&pageSize=" + pageSize)
-        //         .success(function (data) {
-        //             //console.log(data);
-        //             $scope.models = data.modelinfo.body;
-        //             //$scope.filteredList = data.modelinfo.body;
-        //             $scope.totalItems = data.modelinfo.count;
-        //             //$scope.pagination($scope.models);
-        //             //get model running
-        //             $http.get(appSettings.serverPath + "/activetable")
-        //             .success(function (data) {
-        //                 $scope.activetable = data.activetable.body;
-        //             });
-        //         });
-        // }
-        // $scope.getModelPage($scope.currentPage, $scope.itemsPerPage);
-        // //-----------end paging--------------
+         //-----------paging--------------
+         $scope.totalItems = 0;
+         $scope.currentPage = 1;
+         $scope.maxSize = 20;
+         $scope.itemsPerPage = 10;
+
+         $scope.pageChanged = function () {
+             //$scope.getModelPage($scope.currentPage, $scope.itemsPerPage);
+             $scope.search();
+         };
+
+         $scope.getModelPage = function (currentPage, pageSize) {
+             //console.log(appSettings.serverPath);
+             $http.get(appSettings.serverPath + "/modelinfo/search?pageIndex=" + currentPage + "&pageSize=" + pageSize)
+                 .success(function (data) {
+                     //console.log(data);
+                     $scope.models = data.modelinfo.body;
+                     //$scope.filteredList = data.modelinfo.body;
+                     $scope.totalItems = data.modelinfo.count;
+                 });
+         }
+
+         //$scope.getModelPage($scope.currentPage, $scope.itemsPerPage);
+         //-----------end paging--------------
 
 
         //Broadcast message
@@ -61,7 +59,7 @@
                 modelServices.destroy($scope.models[index]._id)
                     .success(function (data, status, headers, config) {
                         $scope.models.splice(index, 1);
-                        $scope.pagination($scope.models);
+                        //$scope.pagination($scope.models);
                         popupService.showMessage('Huỷ đăng ký thành công!');
                     })
                     .error(function (data, status, headers, config) {
@@ -74,9 +72,10 @@
 
         $scope.search = function () {
 
-            modelServices.getAll($scope.email, $scope.status, $scope.floor, $scope.page)
+            modelServices.getAll($scope.email, $scope.status, $scope.floor, $scope.currentPage)
             .success(function (data) {
-                $scope.models = data;
+                $scope.models = data.books;
+                $scope.totalItems = data.count;
             })
             .error(function (err) {
                 $scope.models = [];

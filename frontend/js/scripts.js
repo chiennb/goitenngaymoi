@@ -124,14 +124,57 @@
 	        }
 	    });
 
-	    socket.on('booked', function (data) {
-	        if(data.message) {
-	           console.log(data);
-	           $('#available').text(data.message);	                      
+
+	    socket.on('floorOne', function (data) {
+	        if (data) {
+	            console.log(data);
+	            $('#availableOne').text(data.message);
+
+	            $('#messageClose').text('');
+	            var availableTwo = $('#availableTwo').text();
+	            if (availableTwo == '0' && data.message == '0') {
+	                $('#newsletter').hide();
+	                $('#messageClose').text('Hết vé hệ thống dừng đăng ký!');
+	            }
+	            else if (availableTwo != '0' && data.message == '0') {
+	                $('#rdoOne').hide();
+	                $("input[name=tickettype][value=2]").prop('checked', true);
+	            }
+	            else {
+	                $('#newsletter').show();
+	                $('#rdoTow').show();
+	            }
+
 	        } else {
 	            console.log("There is a problem:", data);
 	        }
 	    });
+
+	    socket.on('floorTwo', function (data) {
+	        if (data) {
+	            console.log(data);
+	            $('#availableTwo').text(data.message);
+
+	            $('#messageClose').text('');
+	            var availableOne = $('#availableOne').text();
+	            if (availableOne == '0' && data.message == '0') {
+	                $('#newsletter').hide();
+	                $('#messageClose').text('Hết vé hệ thống dừng đăng ký!');
+	            }
+	            else if (availableOne != '0' && data.message == '0') {
+	                $('#rdoTwo').hide();
+	                $("input[name=tickettype][value=1]").prop('checked', true);
+	            }
+	            else {
+	                $('#newsletter').show();
+	                $('#rdoTow').show();
+	            }
+	        } else {
+	            console.log("There is a problem:", data);
+	        }
+	    });
+
+
 	 
 	    sendButton.onclick = function(e) {
 	        sendMessage(e);
