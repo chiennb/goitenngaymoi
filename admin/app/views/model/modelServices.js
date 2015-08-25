@@ -52,7 +52,10 @@
             },
             destroy: function(id){
                 return $http.delete(appSettings.serverPath + '/api/books/' + id)
-            }
+            },
+            sendMail: function(email){
+            return $http.post(appSettings.serverPath + '/api/sendMail/' + email)
+        }
         }        
             
     };

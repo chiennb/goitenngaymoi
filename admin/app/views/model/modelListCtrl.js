@@ -64,7 +64,11 @@
                         // or server returns response with an error status.
                     });
             }
-        }        
+        }
+
+        $scope.sendMail = function (email) {
+            console.log(email);
+        }
 
         $scope.search();
     }

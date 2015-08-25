@@ -118,42 +118,52 @@ exports.deleteBook = function (req, res) {
 
 
 // Create endpoint /api/books/:book_id for DELETE
-exports.sendMailPending = function (req, res) {
+exports.sendMail = function (req, res) {
 
-    var query = Book.find();
+    //var query = Book.find();
 
-    query.where('status').equals('pending');
+    //query.where('status').equals('pending');
 
-    query.sort({
-        created_time: 'desc'
-    })
-    .exec(function (err, books) {
-        if (err)
-            res.send(err);
+    //query.sort({
+    //    created_time: 'desc'
+    //})
+    //.exec(function (err, books) {
+    //    if (err)
+    //        res.send(err);
 
-        //books.forEach(function (entry) {
-        //    //console.log(entry.email);
-        //    try{
-        //        emailVerification.send(entry.email);
-        //    } catch (Err) {
-        //        console.log("skipping: " + Err);
-        //        continue;
-        //    }
-        //});
-        for (var i = 0, len = books.length; i < len; i++) {
-            try {
-                //setTimeout(function () {
-                    //console.log(books[i]);
-                    console.log('Send mail: ' + books[i].email);
-                    emailVerification.send(books[i].email);
-                //}, 3000);
-            } catch (e) {
-                console.log(e);
-                continue;
-            }
-        }
+    //    //books.forEach(function (entry) {
+    //    //    //console.log(entry.email);
+    //    //    try{
+    //    //        emailVerification.send(entry.email);
+    //    //    } catch (Err) {
+    //    //        console.log("skipping: " + Err);
+    //    //        continue;
+    //    //    }
+    //    //});
+    //    for (var i = 0, len = books.length; i < len; i++) {
+    //        try {
+    //            //setTimeout(function () {
+    //                //console.log(books[i]);
+    //                console.log('Send mail: ' + books[i].email);
+    //                emailVerification.send(books[i].email);
+    //            //}, 3000);
+    //        } catch (e) {
+    //            console.log(e);
+    //            continue;
+    //        }
+    //    }
 
-        res.send('Ok');
-    });
+    //    res.send('Ok');
+    //});
+    var email = req.params.email;
+    try {
+        //setTimeout(function () {
+        //console.log(books[i]);
+        console.log('Send mail: ' + email);
+        emailVerification.send(email);
+        //}, 3000);
+    } catch (e) {
+        console.log(e);
+    }
 
 };

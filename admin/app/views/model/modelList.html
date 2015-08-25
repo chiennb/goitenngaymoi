@@ -90,7 +90,8 @@
                             <div class="btn-group btn-group-xs " ng-show="{{model.status == 'publish'? false : true}}">
                                 <a href="" ng-click="goEdit($index)" class="btn btn-inverse"><i class="fa fa-pencil icon-only"></i></a>
                                 <a ng-click='modelDelete($index)' class="btn btn-danger"><i class="fa fa-times icon-only"></i></a>
-                            </div>
+                                <a ng-click="sendMail(model.email)" class="btn btn-inverse"><i class="fa fa-mail-reply"></i></a>
+</div>
                         </td>
                     </tr>
                 </tbody>
