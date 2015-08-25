@@ -23,26 +23,27 @@ exports.postBooks = function(req, res) {
 exports.getBooks = function(req, res) {
 
     var perPage = config.PAGESIZE;
-    //var query = Book.find();
+    var query = Book.find();
 
-    var query = {};
+    //var query = {};
 
 
     if (req.query.email != null && req.query.email != '')
-        //query.where('email').equals(new RegExp(req.query.email, 'i'));
-        query["email"] = new RegExp(req.query.email, 'i');
+        query.where('email').equals(new RegExp(req.query.email, 'i'));
+        //query["email"] = new RegExp(req.query.email, 'i');
 
     if (req.query.status != null && req.query.status != '')
-        //query.where('status').equals(req.query.status);
-        query["status"] = status;
+        query.where('status').equals(req.query.status);
+        //query["status"] = status;
 
     var page = 0;
     if (req.query.page != null && req.query.page != '')
         page = req.query.page - 1;
 
+  
     //console.log(page);
-    //query
-    Book.find(query)
+    query
+    //Book.find(query)
     .limit(perPage)
     .skip((perPage * page))
     .sort({
@@ -52,8 +53,14 @@ exports.getBooks = function(req, res) {
     .exec(function (err, books) {
         if (err)
             res.send(err);
+        var queryCount = Book.find();
+        if (req.query.email != null && req.query.email != '')
+            queryCount.where('email').equals(new RegExp(req.query.email, 'i'));
 
-        Book.count(query).exec(function (err, count) {
+        if (req.query.status != null && req.query.status != '')
+            queryCount.where('status').equals(req.query.status);
+
+        queryCount.count().exec(function (err, count) {
             res.json({books: books, count: count});            
         })
 
