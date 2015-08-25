@@ -19,26 +19,23 @@
          $scope.totalItems = 0;
          $scope.currentPage = 1;
          $scope.maxSize = 20;
-         $scope.itemsPerPage = 10;
+         $scope.itemsPerPage = 20;
 
          $scope.pageChanged = function () {
-             //$scope.getModelPage($scope.currentPage, $scope.itemsPerPage);
              $scope.search();
          };
 
-         $scope.getModelPage = function (currentPage, pageSize) {
-             //console.log(appSettings.serverPath);
-             $http.get(appSettings.serverPath + "/modelinfo/search?pageIndex=" + currentPage + "&pageSize=" + pageSize)
-                 .success(function (data) {
-                     //console.log(data);
-                     $scope.models = data.modelinfo.body;
-                     //$scope.filteredList = data.modelinfo.body;
-                     $scope.totalItems = data.modelinfo.count;
-                 });
-         }
+         $scope.search = function () {
 
-         //$scope.getModelPage($scope.currentPage, $scope.itemsPerPage);
-         //-----------end paging--------------
+             modelServices.getAll($scope.email, $scope.status, $scope.floor, $scope.currentPage)
+             .success(function (data) {
+                 $scope.models = data.books;
+                 $scope.totalItems = data.count;
+             })
+             .error(function (err) {
+                 $scope.models = [];
+             });
+         };
 
 
         //Broadcast message
@@ -67,20 +64,7 @@
                         // or server returns response with an error status.
                     });
             }
-        }
-
-
-        $scope.search = function () {
-
-            modelServices.getAll($scope.email, $scope.status, $scope.floor, $scope.currentPage)
-            .success(function (data) {
-                $scope.models = data.books;
-                $scope.totalItems = data.count;
-            })
-            .error(function (err) {
-                $scope.models = [];
-            });
-        };
+        }        
 
         $scope.search();
     }

@@ -58,10 +58,15 @@
                 <tfoot>
                     <tr>
                         <td colspan="6">
-                            <pagination boundary-links="true" total-items="totalItems" class="pagination-sm"
-                                        previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
-                                        max-size="maxSize" ng-model="currentPage"
-                                        items-per-page="itemsPerPage" ng-change="pageChanged()"></pagination>
+                            <pagination previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+                                        class="pagination-sm"
+                                        boundary-links="true"
+                                        total-items="totalItems"
+                                        items-per-page="itemsPerPage"
+                                        num-pages="numPages"
+                                        max-size="maxSize"
+                                        ng-model="currentPage"
+                                        ng-change="pageChanged()"></pagination>
                         </td>
                     </tr>
                 </tfoot>
@@ -90,6 +95,7 @@
                     </tr>
                 </tbody>
             </table>
+            <pre>Page: {{currentPage}} / {{numPages}} Total items: {{totalItems}}</pre>
         </div>
     </div>
 </div>
