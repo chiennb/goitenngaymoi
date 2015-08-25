@@ -19,7 +19,7 @@
          $scope.totalItems = 0;
          $scope.currentPage = 1;
          $scope.maxSize = 20;
-         $scope.itemsPerPage = 1;
+         $scope.itemsPerPage = 20;
 
          $scope.pageChanged = function () {
              $scope.search();
