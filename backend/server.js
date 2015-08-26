@@ -81,11 +81,23 @@ io.sockets.on('connection', function (socket) {
     Book.count({ status: { $ne: 'pending' }, tickettype: '1'}, function (err, count) {
         if (err) console.log(err);
 
-        io.sockets.emit('floorOne', { message: (config.FLOORONE - count) });
+        var tickets = config.FLOORONE - count;
+
+        if (tickets < 0)
+            tickets = 0;
+
+        io.sockets.emit('floorOne', { message: (tickets) });
     });
 
     Book.count({ status: { $ne: 'pending' }, tickettype: '2' }, function (err, count) {
-        io.sockets.emit('floorTwo', { message: (config.FLOORTWO - count) });
+
+        var tickets = config.FLOORTWO - count;
+
+        if (tickets < 0)
+            tickets = 0;
+
+        io.sockets.emit('floorOne', { message: (tickets) });
+
     });
 
     socket.on('send', function (data) {
