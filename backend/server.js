@@ -96,7 +96,7 @@ io.sockets.on('connection', function (socket) {
         if (tickets < 0)
             tickets = 0;
 
-        io.sockets.emit('floorOne', { message: (tickets) });
+        io.sockets.emit('floorTwo', { message: (tickets) });
 
     });
 
